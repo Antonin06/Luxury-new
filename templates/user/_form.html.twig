@@ -27,7 +27,7 @@
             &nbsp; Hooray ! Your profile is complete.
           </h4>
           <div class="c100 p100 small complete ">
-            <span>{# {{ pourcentage }}% #}</span>
+            <span>{{ pourcentage }}%</span>
             <div class="slice">
               <div class="bar"></div>
               <div class="fill"></div>
@@ -146,12 +146,3 @@
     </button>
   </div>
   {{ form_end(form) }}
-
-
-
-  {#
-  {{ form_start(form) }}
-  {{ form_widget(form) }}
-  <button class="btn">{{ button_label|default('Save') }}</button>
-  {{ form_end(form) }}
-  #}

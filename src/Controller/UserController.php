@@ -11,84 +11,98 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/user")
- */
+* @Route("/user")
+*/
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="user_index", methods={"GET"})
-     */
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+  /**
+  * @Route("/", name="user_index", methods={"GET"})
+  */
+  public function index(UserRepository $userRepository): Response
+  {
+    return $this->render('user/index.html.twig', [
+      'users' => $userRepository->findAll(),
+    ]);
+  }
+
+  /**
+  * @Route("/new", name="user_new", methods={"GET","POST"})
+  */
+  public function new(Request $request): Response
+  {
+    $user = new User();
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->persist($user);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('user_index');
     }
 
-    /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+    return $this->render('user/new.html.twig', [
+      'user' => $user,
+      'form' => $form->createView(),
+    ]);
+  }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+  /**
+  * @Route("/{id}", name="user_show", methods={"GET"})
+  */
+  public function show(User $user): Response
+  {
+    return $this->render('user/show.html.twig', [
+      'user' => $user,
+    ]);
+  }
 
-            return $this->redirectToRoute('user_index');
-        }
+  /**
+  * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+  */
+  public function edit(Request $request, User $user): Response
+  {
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
 
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+    if ($form->isSubmitted() && $form->isValid()) {
+      $this->getDoctrine()->getManager()->flush();
+
+      return $this->redirectToRoute('user_index');
+    }
+    $pourcentage = 0;
+    
+    if($user->getGender()){
+      $pourcentage += (100/15);
+    }
+    if($user->getFirstName()){
+      $pourcentage += (100/15);
+    }
+    if($user->getLastName()){
+      $pourcentage += (100/15);
     }
 
-    /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
+    return $this->render('user/edit.html.twig', [
+      'user' => $user,
+      'form' => $form->createView(),
+      'pourcentage' => $pourcentage,
+    ]);
+
+
+  }
+
+  /**
+  * @Route("/{id}", name="user_delete", methods={"DELETE"})
+  */
+  public function delete(Request $request, User $user): Response
+  {
+    if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+      $entityManager = $this->getDoctrine()->getManager();
+      $entityManager->remove($user);
+      $entityManager->flush();
     }
 
-    /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, User $user): Response
-    {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('user_index');
-        }
-
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, User $user): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('user_index');
-    }
+    return $this->redirectToRoute('user_index');
+  }
 }

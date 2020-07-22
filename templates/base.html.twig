@@ -114,7 +114,7 @@
               <nav class="overlay-menu">
                 <ul>
                   <li><a href="{{path('home')}}">Home</a></li>
-                  <li><a href="#">Jobs Offers</a></li>
+                  <li><a href="{{path('job_offer_index')}}">Jobs Offers</a></li>
                   <li><a href="/templates/compagny.html">About Us</a></li>
                   <li><a href="/templates/contact.html">Contact</a></li>
                   <li>-</li>
@@ -127,7 +127,7 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="menuzord-menu pull-right light" role="navigation">
               <li class=" dropdown">
-                <a target="_self" href="#">
+                <a target="_self" href="{{path('app_login')}}">
                   <span>Login</span>
                 </a>
               </li>
@@ -145,7 +145,7 @@
                 </a>
               </li>
               <li class=" dropdown">
-                <a target="_self" href="#">
+                <a target="_self" href="{{path('job_offer_index')}}">
                   <i class=""></i>
                   <span>Jobs offers</span>
                 </a>

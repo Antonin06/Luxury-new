@@ -41,7 +41,7 @@
 
           <div class="portfolio portfolio-with-title col-2 gutter mt-30">
             {% for job_offer in job_offers %}
-            <div class="portfolio-item" data-groups='["all", ""]'>
+            <div class="portfolio-item" data-groups='["all", "{{ job_offer.jobCategory }}"]'>
               <div class="portfolio-wrapper">
                 <div class="card job-card">
                   <div class="card-content">

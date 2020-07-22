@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New JobOffer{% endblock %}
+{% block title %}New Client{% endblock %}
 
 {% block body %}
 <div class="base">
@@ -13,7 +13,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2 class="white-text">Create New Job Offer</h2>
+            <h2 class="white-text">Create New Client</h2>
           </div>
         </div>
       </div>
@@ -22,7 +22,8 @@
 </div>
 
 <div class="container mt-5">
-  {{ include('job_offer/_form.html.twig') }}
-</div>
-<a href="{{ path('job_offer_index') }}">back to list</a>
+    {{ include('client/_form.html.twig') }}
+
+    <a href="{{ path('client_index') }}">back to list</a>
+  </div>
 {% endblock %}

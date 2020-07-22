@@ -3,35 +3,77 @@
 namespace App\Form;
 
 use App\Entity\JobOffer;
+use App\Entity\Client;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+
 
 class JobOfferType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('reference')
-            ->add('title')
-            ->add('description')
-            ->add('active')
-            ->add('note')
-            ->add('location')
-            ->add('salary')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('closedAt')
-            ->add('jobCategory')
-            ->add('type')
-            ->add('client')
-        ;
-    }
+  public function buildForm(FormBuilderInterface $builder, array $options)
+  {
+    $builder
+    ->add('reference')
+    ->add('title')
+    ->add('description', TextareaType::class, [
+      'row_attr' => ['class' => 'text-editor', 'id' => '...'],
+      'attr' => ['class' => 'tinymce'],])
+      ->add('active')
+      ->add('note', TextareaType::class, [
+        'row_attr' => ['class' => 'text-editor', 'id' => '...'],
+        'attr' => ['class' => 'tinymce'],])
+        ->add('location')
+        ->add('salary')
+        ->add('createdAt', DateType::class, [
+          'widget' => 'single_text',
+          'required' => false,
+        ])
+        ->add('updatedAt', DateType::class, [
+          'widget' => 'single_text',
+          'required' => false,
+        ])
+        ->add('closedAt', DateType::class, [
+          'widget' => 'single_text',
+          'required' => false,
+        ])
+        ->add('jobCategory', ChoiceType::class,[
+          'choices' => [
+            'Commercial' => 'Commercial',
+            'Retail sales' => 'Retail sales',
+            'Creative' => 'Creative',
+            'Technology' => 'Technology',
+            'Marketing & PR' => 'Marketing & PR',
+            'Fashion & luxury' => 'Fashion & luxury',
+            'Management & HR' => 'Management & HR'
+          ],
+        ])
+        ->add('type', ChoiceType::class,[
+          'choices' => [
+            'Fulltime' => 'Fulltime',
+            'Part time' => 'Part time',
+            'Temporary' => 'Temporary',
+            'Freelance' => 'Freelance',
+            'Seasonal' => 'Seasonal',
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
+          ],
+        ])
+        ->add('client', EntityType::class,[
+          'class' => Client::class,
+          'choice_label' => 'company_name',
+        ])
+        ;
+      }
+
+      public function configureOptions(OptionsResolver $resolver)
+      {
         $resolver->setDefaults([
-            'data_class' => JobOffer::class,
+          'data_class' => JobOffer::class,
         ]);
+      }
     }
-}

@@ -19,8 +19,8 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('password')
+            // ->add('email')
+            // ->add('password')
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Male' => 'Male',
@@ -30,7 +30,7 @@ class UserType extends AbstractType
             ])
             ->add('firstName')
             ->add('lastName')
-            ->add('phoneNumber')
+            // ->add('phoneNumber')
             ->add('profilePicture', FileType::class, [
                 'label' => 'Picture (PDF file)',
 
@@ -120,17 +120,17 @@ class UserType extends AbstractType
             ],
             ])
             ->add('description')
-            ->add('note')
-            ->add('createdAt', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
-            ])
-            ->add('updatedAt', DateType::class, [
-                'widget' => 'single_text',
-                'required' => false,
-            ])
-            ->add('isAdmin')
-            ->add('availability')
+            // ->add('note')
+            // ->add('createdAt', DateType::class, [
+            //     'widget' => 'single_text',
+            //     'required' => false,
+            // ])
+            // ->add('updatedAt', DateType::class, [
+            //     'widget' => 'single_text',
+            //     'required' => false,
+            // ])
+            // ->add('isAdmin')
+            // ->add('availability')
             ->add('jobCategory', ChoiceType::class,[
                 'choices' => [
                     'Commercial' => 'Commercial',
