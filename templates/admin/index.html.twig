@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="base">
+
+  <!-- Page -->
+  <div class="page">
+
+    <!-- Page Header-->
+    <section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="white-text">Administration</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="container mt-20">
+  <ul class="portfolio-filter brand-filter text-center">
+    <a class="btn btn-md primary waves-effect waves-light" href="{{path('client_index')}}">Clients List</a>
+    <a class="btn btn-md primary waves-effect waves-light" href="{{path('user_new')}}">Create new CLient</a>
+    <a class="btn btn-md primary waves-effect waves-light" href="{{path('home')}}">Candidates List</a>
+    <a class="btn btn-md primary waves-effect waves-light" href="{{path('home')}}">Create new Candidates</a>
+  </ul>
+
+  <table class="table mt-80">
+      <tbody>
+          <tr>
+              <th>Nombre de User</th>
+              <td>{{countUsers}}</td>
+          </tr>
+          <tr>
+              <th>Nombre de Client</th>
+              <td>{{countClients}}</td>
+          </tr>
+          <tr>
+              <th>Nombre de Job Offer</th>
+              <td>{{countJobOffers}}</td>
+          </tr>
+          <tr>
+              <th>Nombre de Candidatures</th>
+              <td>{{countCandidatures}}</td>
+          </tr>
+</table>
+
+</div>
+{% endblock %}
