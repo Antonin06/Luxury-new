@@ -44,7 +44,10 @@ class CandidatureController extends AbstractController
         $entityManager->persist($candidature);
         $entityManager->flush();
 
-        return $this->redirectToRoute('home');
+        return $this->render('job_offer/show.html.twig', [
+            'candidature' => $candidature,
+            'job_offer' => $jobOffer,
+        ]);
     }
 
 
